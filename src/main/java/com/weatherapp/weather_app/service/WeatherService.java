@@ -13,8 +13,16 @@ public class WeatherService {
 
     @Cacheable("weather")
     public WeatherResponse getWeatherByCity(String city) {
-        String url = BASE_URL + city + "&appid=" + API_KEY;
+        String url = BASE_URL + city + "&appid=" + API_KEY + "&units=metric" ;  //for Celsius
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject(url, WeatherResponse.class);
+        WeatherResponse response = restTemplate.getForObject(url, WeatherResponse.class);
+
+//        //debug
+//        System.out.println("Temperature: " + response.getMain().getTemp());
+//        System.out.println("Humidity: " + response.getMain().getHumidity());
+//        System.out.println("Wind Speed: " + response.getWind().getSpeed());
+//        System.out.println("Description: " + response.getWeather()[0].getDescription());
+
+        return response;
     }
 }
