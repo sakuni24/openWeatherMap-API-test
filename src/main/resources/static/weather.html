@@ -17,6 +17,14 @@
             font-size: 2rem;
             color: #555;
         }
+        .humidity {
+            font-size: 2rem;
+            color: #555;
+        }
+        .wind {
+            font-size: 2rem;
+            color: #555;
+        }
     </style>
 </head>
 <body>
@@ -24,6 +32,8 @@
 <input type="text" id="city-input" placeholder="Enter city name" />
 <button onclick="getWeather()">Get Weather</button>
 <p class="temperature">Temperature in <span id="city-name">City</span>: <span id="temperature">--</span>°C</p>
+<p class="humidity">Humidity: <span id="humidity">--</span>%</p>
+<p class="wind">Speed of Wind : <span id="wind">--</span>m/s</p>
 
 <script>
         function getWeather() {
@@ -33,8 +43,13 @@
                 .then(data => {
                     const tempInKelvin = data.main.temp;
                     const tempInCelsius = (tempInKelvin - 273.15).toFixed(2);
+                    const humidity = data.main.humidity;
+                    const wind = data.wind.speed;
+
                     document.getElementById('city-name').textContent = city;
                     document.getElementById('temperature').textContent = tempInCelsius;
+                    document.getElementById('humidity').textContent = humidity;
+                    document.getElementById('wind').textContent = wind;
                 })
                 .catch(error => console.error('Error fetching weather data:', error));
         }
