@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather App</title>
+    <title>Current Weather</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -25,15 +25,20 @@
             font-size: 2rem;
             color: #555;
         }
+        .weather {
+            font-size: 2rem;
+            color: #555;
+        }
     </style>
 </head>
 <body>
-<h1>Weather App</h1>
+<h1>Current Weather</h1>
 <input type="text" id="city-input" placeholder="Enter city name" />
-<button onclick="getWeather()">Get Weather</button>
+<button onclick="getWeather()">Go</button>
 <p class="temperature">Temperature in <span id="city-name">City</span>: <span id="temperature">--</span>°C</p>
 <p class="humidity">Humidity: <span id="humidity">--</span>%</p>
 <p class="wind">Speed of Wind : <span id="wind">--</span>m/s</p>
+<p class="weather">Weather : <span id="weather">--</span></p>
 
 <script>
         function getWeather() {
@@ -45,11 +50,13 @@
                     const tempInCelsius = (tempInKelvin - 273.15).toFixed(2);
                     const humidity = data.main.humidity;
                     const wind = data.wind.speed;
+                    const weather = data.weather[0].description;
 
                     document.getElementById('city-name').textContent = city;
                     document.getElementById('temperature').textContent = tempInCelsius;
                     document.getElementById('humidity').textContent = humidity;
                     document.getElementById('wind').textContent = wind;
+                    document.getElementById('weather').textContent = weather;
                 })
                 .catch(error => console.error('Error fetching weather data:', error));
         }
