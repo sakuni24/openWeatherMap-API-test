@@ -16,9 +16,10 @@ public class WeatherController {
     private WeatherService weatherService;
 
     @GetMapping("/weather")
-    public ResponseEntity<?> getWeather(@RequestParam String city) {
+    public ResponseEntity<?> getWeather(@RequestParam String city, @RequestParam(required = false) String country) {
         try {
-            WeatherResponse weather = weatherService.getWeatherByCity(city);
+            String query = (country!=null && !country.isEmpty()) ? city + "," + country : city;
+            WeatherResponse weather = weatherService.getWeatherByCity(query);
             return ResponseEntity.ok(weather);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -26,8 +27,5 @@ public class WeatherController {
         }
     }
 }
-
-
-
 
 
