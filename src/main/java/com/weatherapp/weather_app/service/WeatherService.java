@@ -13,7 +13,7 @@ public class WeatherService {
 
     @Cacheable("weather")
     public WeatherResponse getWeatherByCity(String city) {
-        String url = BASE_URL + city + "&appid=" + API_KEY + "&units=metric" ;  //for Celsius
+        String url = BASE_URL + city + "&appid=" + API_KEY ;//+ "&units=metric" ;  //for Celsius
         RestTemplate restTemplate = new RestTemplate();
         WeatherResponse response = restTemplate.getForObject(url, WeatherResponse.class);
 
