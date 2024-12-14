@@ -1,5 +1,7 @@
 package com.weatherapp.weather_app.controller;
 
+import com.weatherapp.weather_app.exception.APIKeyException;
+import com.weatherapp.weather_app.exception.CityNotFoundException;
 import com.weatherapp.weather_app.model.WeatherResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,9 +23,15 @@ public class WeatherController {
             String query = (country!=null && !country.isEmpty()) ? city + "," + country : city;
             WeatherResponse weather = weatherService.getWeatherByCity(query);
             return ResponseEntity.ok(weather);
+        } catch (CityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("City not found. Please check the City name");
+        } catch (APIKeyException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("Invalid API key. Please update your API key.");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("City not found or API error.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An unexpected error occurred.");
         }
     }
 }
